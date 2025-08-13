@@ -59,7 +59,7 @@ function formatDate() {
 }
 
 function calculateAttendance() {
-    let output = `*Attendance for ${formatDate()}*\n\n`;
+    let output = `*Parade State for ${formatDate()}*\n\n`;
     let totalPresent = 0;
     let totalPeople = 0;
 
@@ -87,7 +87,7 @@ function calculateAttendance() {
         let presentCount = members.length - absentees.length;
         output += `${branch}: ${presentCount}/${members.length} present\n`;
         if (absentees.length > 0) {
-            output += `- ${absentees.join(", ")}\n`;
+            output += `- _${absentees.join(", ")}_\n`;
         }
         output += "\n";
     }
@@ -107,3 +107,4 @@ function copyToClipboard() {
 
 </body>
 </html>
+
