@@ -46,7 +46,7 @@ for (let branch in BRANCHES) {
     BRANCHES[branch].forEach(name => {
         table += `<tr>
                     <td>${name}</td>
-                    <td width="50"; style="text-align:center;"><input type="checkbox" name="${branch}__${name}__present"></td>
+                    <td width="50" style="text-align:center;"><input type="checkbox" name="${branch}__${name}__present"></td>
                     <td><input type="text" name="${branch}__${name}" placeholder="MC, leave, etc."></td>
                   </tr>`;
     });
@@ -61,7 +61,8 @@ function formatDate() {
 }
 
 function calculateAttendance() {
-    let output = `Attendance for ${formatDate()}\n\n`;
+    //let output = `Parade State for ${formatDate()}\n\n`;
+    let output = `\n`;
     let totalPresent = 0;
     let totalPeople = 0;
 
@@ -74,34 +75,28 @@ function calculateAttendance() {
             let val = document.querySelector(`[name='${branch}__${name}']`).value.trim();
             let isPresentChecked = document.querySelector(`[name='${branch}__${name}__present']`).checked;
 
-            if (isPresentChecked || val === "") {
+            // Rule logic:
+            if (!isPresentChecked && !val) {
+                // Present: no tick, no text
                 presentCount++;
-            } else {
+            } 
+            else if (!isPresentChecked && val) {
+                // Absent: only text
                 absentees.push(`${name} (${val})`);
+            } 
+            else if (isPresentChecked && val) {
+                // Present but with excuse
+                presentCount++;
+                absentees.push(`${name} (${val})`);
+            } 
+            else if (isPresentChecked && !val) {
+                // Present: tick only
+                presentCount++;
             }
         });
 
         totalPresent += presentCount;
         totalPeople += members.length;
-    }
-
-    output += `TOTAL: ${totalPresent}/${totalPeople} present\n\n`;
-
-    for (let branch in BRANCHES) {
-        let members = BRANCHES[branch];
-        let absentees = [];
-        let presentCount = 0;
-
-        members.forEach(name => {
-            let val = document.querySelector(`[name='${branch}__${name}']`).value.trim();
-            let isPresentChecked = document.querySelector(`[name='${branch}__${name}__present']`).checked;
-
-            if (isPresentChecked || val === "") {
-                presentCount++;
-            } else {
-                absentees.push(`${name} (${val})`);
-            }
-        });
 
         output += `${branch}: ${presentCount}/${members.length} present\n`;
         if (absentees.length > 0) {
@@ -110,6 +105,7 @@ function calculateAttendance() {
         output += "\n";
     }
 
+    output = `*Parade State for ${formatDate()}*\n\nTOTAL: ${totalPresent}/${totalPeople} present\n\n` + output;
     document.getElementById("output").value = output.trim();
 }
 
@@ -125,4 +121,3 @@ function copyToClipboard() {
 
 </body>
 </html>
-
