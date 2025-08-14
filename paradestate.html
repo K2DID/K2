@@ -46,7 +46,7 @@ for (let branch in BRANCHES) {
     BRANCHES[branch].forEach(name => {
         table += `<tr>
                     <td>${name}</td>
-                    <td style="text-align:center;"><input type="checkbox" name="${branch}__${name}__present"></td>
+                    <td width="50"; style="text-align:center;"><input type="checkbox" name="${branch}__${name}__present"></td>
                     <td><input type="text" name="${branch}__${name}" placeholder="MC, leave, etc."></td>
                   </tr>`;
     });
@@ -125,3 +125,4 @@ function copyToClipboard() {
 
 </body>
 </html>
+
