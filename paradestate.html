@@ -98,7 +98,7 @@ function calculateAttendance() {
         totalPresent += presentCount;
         totalPeople += members.length;
 
-        output += `${branch}: ${presentCount}/${members.length} present\n`;
+        output += `${branch}: ${presentCount}/${members.length}\n`;
         if (absentees.length > 0) {
             output += `- _${absentees.join(", ")}_\n`;
         }
@@ -121,4 +121,5 @@ function copyToClipboard() {
 
 </body>
 </html>
+
 
